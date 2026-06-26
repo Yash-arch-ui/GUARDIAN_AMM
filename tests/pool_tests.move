@@ -5,7 +5,7 @@ module circuit_breaker_amm::pool_tests {
     use sui::test_scenario;
     use sui::coin;
     use sui::sui::SUI;
-    use sui:::clock::Clock;
+    use sui::clock::Clock;
 
     public struct USDC has drop {}
 
@@ -29,7 +29,7 @@ module circuit_breaker_amm::pool_tests {
                 test_scenario::take_shared<
                     pool::Pool<SUI, USDC>
                 >(&scenario);
-            let clock = test_scenario::take_shared<Clock>(&scenario);
+            let clock = sui::clock::create_for_testing(test_scenario::ctx(&mut scenario));
 
             let coin_x = coin::mint_for_testing<SUI>(
                 1000,
@@ -55,7 +55,7 @@ module circuit_breaker_amm::pool_tests {
             assert!(pool::lp_supply(&p) == lp, 3);
 
             test_scenario::return_shared(p);
-            test_scenario::return_shared(clock);
+            sui::clock::destroy_for_testing(clock);
         };
 
         test_scenario::end(scenario);
@@ -82,6 +82,9 @@ module circuit_breaker_amm::pool_tests {
                     pool::Pool<SUI, USDC>
                 >(&scenario);
 
+            // Create the clock properly at the start of the block
+            let clock = sui::clock::create_for_testing(test_scenario::ctx(&mut scenario));
+
             let coin_x = coin::mint_for_testing<SUI>(
                 1000,
                 test_scenario::ctx(&mut scenario)
@@ -96,13 +99,14 @@ module circuit_breaker_amm::pool_tests {
                 &mut p,
                 coin_x,
                 coin_y,
+                &clock,
                 test_scenario::ctx(&mut scenario)
             );
-        let clock = test_scenario::take_shared<Clock>(&scenario);
 
             let (out_x, out_y) = pool::remove_liquidity(
                 &mut p,
                 lp,
+                &clock,
                 test_scenario::ctx(&mut scenario)
             );
 
@@ -111,12 +115,12 @@ module circuit_breaker_amm::pool_tests {
 
             coin::burn_for_testing(out_x);
             coin::burn_for_testing(out_y);
-            test_scenario::ctx(&mut scenario);
+            
+            // Clean up resources safely
             test_scenario::return_shared(p);
+            sui::clock::destroy_for_testing(clock);
         };
 
         test_scenario::end(scenario);
     }
-    
-    
-    }
+}
