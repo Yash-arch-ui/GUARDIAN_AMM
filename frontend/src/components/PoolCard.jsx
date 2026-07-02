@@ -17,9 +17,9 @@ export default function PoolCard() {
     );
   }
 
-  const totalLiquidity = pool
-    ? Number(pool.reserveX) + Number(pool.reserveY)
-    : 0;
+  const reserveX = pool ? Number(pool.balance_x) / 1e9 : 0;
+  const reserveY = pool ? Number(pool.balance_y) / 1e9 : 0;
+  const totalLiquidity = reserveX + reserveY;
 
   return (
     <div className="p-6 bg-zinc-900/20 rounded-2xl border border-zinc-800/60 backdrop-blur-md hover:border-zinc-700/80 transition-all duration-300 flex flex-col justify-between min-h-[220px] group">
@@ -29,13 +29,16 @@ export default function PoolCard() {
             Pool Information
           </h3>
           <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-wider">
-            v4-Core
+            AMM
           </span>
         </div>
 
         <div className="mb-4">
           <div className="text-3xl font-semibold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-violet-400">
-            {totalLiquidity.toLocaleString()}
+            {totalLiquidity.toLocaleString(undefined, {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })}
           </div>
           <div className="text-[11px] text-zinc-500 font-mono tracking-wider uppercase mt-0.5">
             Total Combined Liquidity
@@ -45,19 +48,47 @@ export default function PoolCard() {
 
       <div className="grid grid-cols-2 gap-y-3 gap-x-2 border-t border-zinc-800/50 pt-3 text-xs font-mono">
         <div>
-          <span className="block text-[10px] text-zinc-500 uppercase tracking-wide">Reserve X</span>
-          <span className="text-zinc-300 font-medium">{pool?.reserveX?.toString() || '0'}</span>
+          <span className="block text-[10px] text-zinc-500 uppercase tracking-wide">
+            Reserve X
+          </span>
+          <span className="text-zinc-300 font-medium">
+            {reserveX.toLocaleString(undefined, {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })}
+          </span>
         </div>
+
         <div>
-          <span className="block text-[10px] text-zinc-500 uppercase tracking-wide">Reserve Y</span>
-          <span className="text-zinc-300 font-medium">{pool?.reserveY?.toString() || '0'}</span>
+          <span className="block text-[10px] text-zinc-500 uppercase tracking-wide">
+            Reserve Y
+          </span>
+          <span className="text-zinc-300 font-medium">
+            {reserveY.toLocaleString(undefined, {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })}
+          </span>
         </div>
+
         <div>
-          <span className="block text-[10px] text-zinc-500 uppercase tracking-wide">LP Supply</span>
-          <span className="text-zinc-400">{pool?.lpSupply?.toString() || '0'}</span>
+          <span className="block text-[10px] text-zinc-500 uppercase tracking-wide">
+            LP Supply
+          </span>
+          <span className="text-zinc-400">
+            {pool
+              ? (Number(pool.lpSupply) / 1e9).toLocaleString(undefined, {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })
+              : '0.00'}
+          </span>
         </div>
+
         <div>
-          <span className="block text-[10px] text-zinc-500 uppercase tracking-wide">Conversion Rate</span>
+          <span className="block text-[10px] text-zinc-500 uppercase tracking-wide">
+            Conversion Rate
+          </span>
           <span className="text-zinc-400 text-[11px]">
             1 X = {pool?.spotPrice ? pool.spotPrice.toFixed(4) : '0.0000'} Y
           </span>

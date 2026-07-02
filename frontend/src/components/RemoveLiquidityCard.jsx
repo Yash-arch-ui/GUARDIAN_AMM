@@ -24,8 +24,6 @@ export default function RemoveLiquidityCard() {
       return;
     }
 
-    const rawLpAmount = BigInt(Math.floor(Number(lpAmount) * 1e9)).toString();
-
     removeLiquidity({
       lpCoinObjectId,
       lpAmount: rawLpAmount,

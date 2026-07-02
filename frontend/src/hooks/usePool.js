@@ -24,18 +24,16 @@ export function usePool() {
       
       const rawReserveX = fields.balance_x?.fields?.value ?? fields.balance_x ?? 0;
       const rawReserveY = fields.balance_y?.fields?.value ?? fields.balance_y ?? 0;
+      const rawLpSypply = fields.lp_supply?.fields?.value ?? fields.lp_supply ?? 0;
       const resX = Number(rawReserveX);
       const resY = Number(rawReserveY);
       const computedSpotPrice = resX > 0 ? resY / resX : 0;
 
       return {
-        reserveX: BigInt(rawReserveX),
-        reserveY: BigInt(rawReserveY),
+        balance_x: BigInt(rawReserveX),
+        balance_y: BigInt(rawReserveY),
+        lpSupply: BigInt(rawLpSypply),
         spotPrice: computedSpotPrice,
-        twap: BigInt(fields.last_price_cumulative ?? 0),
-        paused: !!fields.paused,
-        cooldown: Number(fields.last_swap_timestamp ?? 0),
-        lpSupply: BigInt(fields.lp_supply?.fields?.value ?? 0),
       };
       
     },

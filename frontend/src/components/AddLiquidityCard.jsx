@@ -38,22 +38,18 @@ export default function AddLiquidityCard() {
       alert("Insufficient asset objects found in your wallet for this pool.");
       return;
     }
-
-    const rawAmountX = BigInt(Math.floor(Number(amountX) * 1e9)).toString();
-    const rawAmountY = BigInt(Math.floor(Number(amountY) * 1e9)).toString();
-    
     console.log(" CHECKING INPUTS:", { 
        coinXObjectId, 
        coinYObjectId, 
-       amountX: rawAmountX, 
-       amountY: rawAmountY 
+       amountX,
+       amountY,
     });
 
     addLiquidity({
       coinXObjectId,
       coinYObjectId,
-      amountX: rawAmountX,
-      amountY: rawAmountY,
+      amountX,
+      amountY,
       onSuccess: () => {
         setAmountX('');
         setAmountY('');

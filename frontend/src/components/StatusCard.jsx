@@ -48,11 +48,21 @@ export default function StatusCard() {
       <div className="grid grid-cols-2 gap-y-3 gap-x-2 border-t border-zinc-800/50 pt-3 text-xs font-mono">
         <div>
           <span className="block text-[10px] text-zinc-500 uppercase tracking-wide">Reserve X</span>
-          <span className="text-zinc-300 font-medium">{pool?.reserveX?.toString() || '0'}</span>
+          <span className="text-zinc-300 font-medium">{pool
+  ? (Number(pool.balance_x) / 1e9).toLocaleString(undefined, {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    })
+  : '0.00'}</span>
         </div>
         <div>
           <span className="block text-[10px] text-zinc-500 uppercase tracking-wide">Reserve Y</span>
-          <span className="text-zinc-300 font-medium">{pool?.reserveY?.toString() || '0'}</span>
+          <span className="text-zinc-300 font-medium">{pool
+  ? (Number(pool.balance_y) / 1e9).toLocaleString(undefined, {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    })
+  : '0.00'}</span>
         </div>
         <div className="col-span-2">
           <span className="block text-[10px] text-zinc-500 uppercase tracking-wide">Last Swap</span>
