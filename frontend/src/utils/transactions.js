@@ -7,7 +7,7 @@ export function buildSwapTx({ coinObjectId, amountIn, minAmountOut, isXtoY }) {
   const tx = new Transaction();
     const amountInMist = toMist(amountIn);
       const minOutMist = toMist(minAmountOut);
-  const [splitCoin] = tx.splitCoins(tx.object(coinObjectId), tx.pure.u64(amountInMist));
+  const [splitCoin] = tx.splitCoins(tx.object(coinObjectId), [tx.pure.u64(amountInMist)]);
   
   tx.moveCall({
     target: isXtoY 
@@ -17,7 +17,7 @@ export function buildSwapTx({ coinObjectId, amountIn, minAmountOut, isXtoY }) {
     arguments: [
       tx.object(POOL_ID),// pool id 
       splitCoin,// COIN TO SWAP
-      tx.pure.u64(toMist(minAmountOut)),
+      tx.pure.u64(minOutMist),
       tx.object(ORACLE_SHARED_OBJ_ID),// oracle feed id
     ],
   });
@@ -28,8 +28,8 @@ export function buildSwapTx({ coinObjectId, amountIn, minAmountOut, isXtoY }) {
 export function buildAddLiquidityTx({ coinXObjectId, coinYObjectId, amountX, amountY }) {
   const tx = new Transaction();
   
-  const [splitX] = tx.splitCoins(tx.object(coinXObjectId), tx.pure.u64(toMist(amountX)));
-  const [splitY] = tx.splitCoins(tx.object(coinYObjectId), tx.pure.u64(toMist(amountY)));
+  const [splitX] = tx.splitCoins(tx.object(coinXObjectId), [tx.pure.u64(toMist(amountX))]);
+  const [splitY] = tx.splitCoins(tx.object(coinYObjectId), [tx.pure.u64(toMist(amountY))]);
 
   tx.moveCall({
     target: `${PACKAGE_ID}::pool::add_liquidity`, 
@@ -46,7 +46,7 @@ export function buildAddLiquidityTx({ coinXObjectId, coinYObjectId, amountX, amo
 export function buildRemoveLiquidityTx({ lpCoinObjectId, lpAmount }) {
   const tx = new Transaction();
   
-  const [splitLP] = tx.splitCoins(tx.object(lpCoinObjectId), tx.pure.u64(toMist(lpAmount)));
+  const [splitLP] = tx.splitCoins(tx.object(lpCoinObjectId), [tx.pure.u64(toMist(lpAmount))]);
 
   tx.moveCall({
     target: `${PACKAGE_ID}::pool::remove_liquidity`,
