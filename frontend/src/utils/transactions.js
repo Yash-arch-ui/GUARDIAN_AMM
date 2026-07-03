@@ -30,7 +30,12 @@ export function buildAddLiquidityTx({ coinXObjectId, coinYObjectId, amountX, amo
   
   const [splitX] = tx.splitCoins(tx.object(coinXObjectId), [tx.pure.u64(toMist(amountX))]);
   const [splitY] = tx.splitCoins(tx.object(coinYObjectId), [tx.pure.u64(toMist(amountY))]);
-
+console.log("PACKAGE:", PACKAGE_ID);
+console.log("POOL:", POOL_ID);
+console.log("Coin X:", coinXObjectId);
+console.log("Coin Y:", coinYObjectId);
+console.log("Amount X:", amountX);
+console.log("Amount Y:", amountY);
   tx.moveCall({
     target: `${PACKAGE_ID}::pool::add_liquidity`, 
     typeArguments: [COIN_X_TYPE, COIN_Y_TYPE],
@@ -40,7 +45,7 @@ export function buildAddLiquidityTx({ coinXObjectId, coinYObjectId, amountX, amo
       splitY
     ],
   });
-
+console.log(tx);
   return tx;
 }
 export function buildRemoveLiquidityTx({ lpCoinObjectId, lpAmount }) {
