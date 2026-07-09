@@ -1,8 +1,8 @@
-# Guardian AMM
+# AEGIUS
 
-Guardian AMM is a decentralized Automated Market Maker (AMM) built on the Sui blockchain with an integrated circuit breaker mechanism designed to protect liquidity providers during periods of abnormal market volatility.
+Aegius AMM is a decentralized Automated Market Maker (AMM) built on the Sui blockchain with an integrated circuit breaker mechanism designed to protect liquidity providers during periods of abnormal market volatility.
 
-Unlike traditional AMMs that continue processing swaps regardless of market conditions, Guardian AMM monitors pool activity and can temporarily halt trading when predefined risk thresholds are exceeded, improving protocol safety and resilience.
+Unlike traditional AMMs that continue processing swaps regardless of market conditions, Aegius AMM monitors pool activity and can temporarily halt trading when predefined risk thresholds are exceeded, improving protocol safety and resilience.
 ## Technology Stack
 
 ### Smart Contracts
@@ -84,7 +84,7 @@ The protocol continuously monitors trading conditions and activates a protective
 ---
 
 # Circuit Breaker
-Guardian AMM introduces an additional safety layer over traditional decentralized exchanges.
+Aegis AMM introduces an additional safety layer over traditional decentralized exchanges.
 
 When market conditions become excessively volatile:
 
@@ -122,7 +122,7 @@ Second custom fungible asset used for trading pairs.
 
 ## Clone Repository
 
-git clone https://github.com/Yash-arch-ui/GUARDIAN_AMM.git
+git clone https://github.com/Yash-arch-ui/Aegis.git
 
 ## Build Move Contracts
 
@@ -225,9 +225,9 @@ export const COIN_Y_TYPE =
 
 ---
 
-# Why Guardian AMM?
+# Why Aegis AMM?
 
-Guardian AMM combines the efficiency of decentralized liquidity pools with additional protection inspired by traditional financial circuit breakers.
+Aegis AMM combines the efficiency of decentralized liquidity pools with additional protection inspired by traditional financial circuit breakers.
 
 Its goal is to create a more secure DeFi trading experience by reducing risks associated with extreme market movements while remaining fully decentralized.
 
