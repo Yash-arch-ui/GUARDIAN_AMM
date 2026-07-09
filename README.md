@@ -1,4 +1,4 @@
-# AEGIUS
+## AEGIS
 
 Aegius AMM is a decentralized Automated Market Maker (AMM) built on the Sui blockchain with an integrated circuit breaker mechanism designed to protect liquidity providers during periods of abnormal market volatility.
 
